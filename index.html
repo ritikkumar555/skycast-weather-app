@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Check the current weather for any city or your location.">
+  <title>Skycast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="clear" data-night="false">
+  <main class="card">
+    <form id="searchForm" class="search" role="search">
+      <label for="cityName" class="visually-hidden">City</label>
+      <input type="text" id="cityName" placeholder="Search for a city" autocomplete="off" required>
+      <button type="submit" id="searchBtn">Search</button>
+    </form>
+    <button type="button" id="locationBtn" class="link-btn">Use my location</button>
+
+    <div id="status" class="status" role="status" aria-live="polite">
+      Search for a city to see the current weather.
+    </div>
+
+    <section id="result" class="result" hidden>
+      <img id="icon" class="icon" alt="" width="96" height="96">
+      <p id="temp" class="temp"></p>
+      <h1 id="city" class="city"></h1>
+      <p id="condition" class="condition"></p>
+
+      <dl class="stats">
+        <div><dt>Feels like</dt><dd id="feels"></dd></div>
+        <div><dt>Wind</dt><dd id="wind"></dd></div>
+        <div><dt>Humidity</dt><dd id="humidity"></dd></div>
+        <div><dt>Pressure</dt><dd id="pressure"></dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

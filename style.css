@@ -1,0 +1,168 @@
+:root {
+  --ink: #16202b;
+  --muted: #5d6b7a;
+  --line: #e3e8ee;
+  --accent: #1f6feb;
+  --accent-ink: #fff;
+  --sky-top: #3a8dde;
+  --sky-bottom: #9bd4f5;
+}
+
+body[data-theme="clouds"]  { --sky-top: #66788d; --sky-bottom: #b6c2cd; }
+body[data-theme="rain"]    { --sky-top: #34445a; --sky-bottom: #72869b; }
+body[data-theme="thunder"] { --sky-top: #25243f; --sky-bottom: #55557b; }
+body[data-theme="snow"]    { --sky-top: #8aa4bd; --sky-bottom: #e0eaf2; }
+body[data-theme="mist"]    { --sky-top: #8b979f; --sky-bottom: #cdd3d7; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; }
+
+body {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(170deg, var(--sky-top), var(--sky-bottom)) fixed;
+  position: relative;
+}
+
+/* Darkens the sky after sunset */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #060b1f;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+body[data-night="true"]::before { opacity: 0.55; }
+body[data-night="true"][data-theme="clear"] { --sky-top: #14224b; --sky-bottom: #3a4f94; }
+body[data-night="true"][data-theme="clear"]::before { opacity: 0.2; }
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 50px rgba(8, 16, 40, 0.25);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Search */
+.search { display: flex; gap: 0.5rem; }
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  color: inherit;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: #f7f9fb;
+}
+.search input::placeholder { color: #8a97a5; }
+
+.search button {
+  padding: 0.75rem 1.1rem;
+  font: inherit;
+  font-weight: 500;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+.search button:hover { background: #1a5fd0; }
+
+.link-btn {
+  margin-top: 0.75rem;
+  padding: 0.25rem 0;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.link-btn:hover { text-decoration: underline; }
+
+input:focus-visible, button:focus-visible {
+  outline: 3px solid rgba(31, 111, 235, 0.45);
+  outline-offset: 2px;
+}
+
+/* Status (empty, loading, error) */
+.status {
+  margin-top: 1.5rem;
+  padding: 2.5rem 0.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+.status[hidden] { display: none; }
+.status.error { color: #b42318; }
+
+/* Result */
+.result {
+  margin-top: 1rem;
+  text-align: center;
+}
+.result[hidden] { display: none; }
+
+.icon { display: block; margin: 0 auto; }
+
+.temp {
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.city {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.condition {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.stats > div + div { border-left: 1px solid var(--line); }
+.stats dt { font-size: 0.8rem; color: var(--muted); }
+.stats dd { margin-top: 0.25rem; font-weight: 700; font-size: 0.95rem; }
+
+/* Small screens */
+@media (max-width: 420px) {
+  body { padding: 1rem; }
+  .card { padding: 1.25rem; }
+  .temp { font-size: 3.75rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); row-gap: 1rem; }
+  .stats > div:nth-child(3) { border-left: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { transition: none; }
+}
